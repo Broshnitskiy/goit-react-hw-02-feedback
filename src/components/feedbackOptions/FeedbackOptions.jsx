@@ -1,4 +1,5 @@
 import { capitalizeFirstLetter } from "../../helpers/capitalizeFirstLetter";
+import PropTypes from "prop-types";
 
 export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return options.map((option) => (
@@ -6,4 +7,9 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
       {capitalizeFirstLetter(option)}
     </button>
   ));
+};
+
+FeedbackOptions.prototypes = {
+  options: PropTypes.array.isRequired,
+  onLeaveFeedback: PropTypes.func,
 };
