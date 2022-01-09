@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { capitalizeFirstLetter } from "./helpers/capitalizeFirstLetter";
+import { Statistics } from "./components/statistics/Statistics";
+import { FeedbackOptions } from "./components/feedbackOptions/FeedbackOptions";
+import { Section } from "./components/section/Section";
+import { Notification } from "./components/notification/Notification";
 
 export default class App extends Component {
   state = {
@@ -14,34 +17,39 @@ export default class App extends Component {
     });
   };
 
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
+  };
+
+  countPositiveFeedbackPercentage = (total) => {
+    return total ? Math.round((this.state.good * 100) / total) : 0;
+  };
+
   render() {
     const stateKeys = Object.keys(this.state);
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const positivePercentage = this.countPositiveFeedbackPercentage(total);
 
     return (
-      <div>
-        <p>Please leave feedback</p>
-
-        {stateKeys.map((stateKey, index) => (
-          <button
-            type="button"
-            key={stateKey}
-            onClick={() => this.updateCounter(stateKey)}
-          >
-            {capitalizeFirstLetter(stateKey)}
-          </button>
-        ))}
-
-        <p>Statistics</p>
-        <ul>
-          {stateKeys.map((stateKey, index) => (
-            <li key={stateKey}>
-              {capitalizeFirstLetter(stateKey)} : {this.state[stateKey]}
-            </li>
-          ))}
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
+      <Section title="Please leave feedback">
+        <FeedbackOptions
+          options={stateKeys}
+          onLeaveFeedback={this.updateCounter}
+        />
+        {good || neutral || bad ? (
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        ) : (
+          <Notification message="There is no feedback" />
+        )}
+      </Section>
     );
   }
 }

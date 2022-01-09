@@ -1,0 +1,9 @@
+import { capitalizeFirstLetter } from "../../helpers/capitalizeFirstLetter";
+
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+  return options.map((option) => (
+    <button type="button" key={option} onClick={() => onLeaveFeedback(option)}>
+      {capitalizeFirstLetter(option)}
+    </button>
+  ));
+};
