@@ -1,25 +1,47 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Component } from "react";
+import { capitalizeFirstLetter } from "./helpers/capitalizeFirstLetter";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  updateCounter = (option) => {
+    this.setState({
+      [option]: this.state[option] + 1,
+    });
+  };
+
+  render() {
+    const stateKeys = Object.keys(this.state);
+
+    return (
+      <div>
+        <p>Please leave feedback</p>
+
+        {stateKeys.map((stateKey, index) => (
+          <button
+            type="button"
+            key={stateKey}
+            onClick={() => this.updateCounter(stateKey)}
+          >
+            {capitalizeFirstLetter(stateKey)}
+          </button>
+        ))}
+
+        <p>Statistics</p>
+        <ul>
+          {stateKeys.map((stateKey, index) => (
+            <li key={stateKey}>
+              {capitalizeFirstLetter(stateKey)} : {this.state[stateKey]}
+            </li>
+          ))}
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    );
+  }
 }
-
-export default App;
