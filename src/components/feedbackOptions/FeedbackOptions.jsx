@@ -1,12 +1,27 @@
-import { capitalizeFirstLetter } from "../../helpers/capitalizeFirstLetter";
-import PropTypes from "prop-types";
+import { capitalizeFirstLetter } from '../../helpers/capitalizeFirstLetter';
+import PropTypes from 'prop-types';
+import { Container, Button } from './FeedbackOptions.styled';
 
 export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
-  return options.map((option) => (
-    <button type="button" key={option} onClick={() => onLeaveFeedback(option)}>
-      {capitalizeFirstLetter(option)}
-    </button>
-  ));
+  return (
+    <Container>
+      {options.map(option => (
+        <Button
+          type="button"
+          key={option}
+          onClick={() => onLeaveFeedback(option)}
+        >
+          {capitalizeFirstLetter(option)}
+        </Button>
+      ))}
+    </Container>
+  );
+
+  // return options.map(option => (
+  //   <Button type="button" key={option} onClick={() => onLeaveFeedback(option)}>
+  //     {capitalizeFirstLetter(option)}
+  //   </Button>
+  // ));
 };
 
 FeedbackOptions.prototypes = {
